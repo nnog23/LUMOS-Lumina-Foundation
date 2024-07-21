@@ -1,18 +1,57 @@
 ---
 ---
 
-<header class="header">
-    <div class="container">
-      <div class="logo">
-        <a href="index.html">
-        </a>
-      </div>
+<header class="">
+    <div class="bg-light-200 justify-evenly self-center px-36 py-3">
       <nav>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/about">About</a></li>
-          <li><a href="/blog">Blog</a></li>
-        </ul>
+        <div class="md:flex flex-row justify-between items-center gap-24">
+          <img src="../../public/images/LuminaFoundationLogo.svg">
+
+          <div class="flex flex-row justify-center items-center hover:bg-primary-100 hover:text-light-200 py-2 px-4 rounded-md transition ease-out hover:shadow-lg">
+            <a href="/">HOME</a>
+          </div>
+
+          <div class="flex flex-row justify-center items-center hover:bg-primary-100 hover:text-light-200 py-2 px-4 rounded-md transition ease-out hover:shadow-lg">
+            <a href="/npre">NPRE</a>
+          </div>
+
+
+          <!-- Dropdown for NEWS -->
+          <div class="relative dropdown hover:pb-20 md:hover:pb-0">
+            <div class="flex flex-row justify-center items-center gap-1 hover:bg-primary-100 hover:text-light-200 py-2 px-4 rounded-md transition ease-out hover:shadow-lg">
+                <div><a href="/news">NEWS</a></div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+            </div>
+            <div class="absolute md:left-0 w-48 mt-0 origin-top-left bg-white border border-gray-200 rounded-md shadow-lg dropdown-menu hidden">
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">LATEST</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">EVENTS</a>
+            </div>
+        </div>
+
+          <!-- Dropdown for INITIATIVES -->
+          <div class="relative dropdown hover:pb-20 md:hover:pb-0">
+            <div class="flex flex-row justify-center items-center gap-1 hover:bg-primary-100 hover:text-light-200 py-2 px-4 rounded-md transition ease-out hover:shadow-lg">
+                <div><a href="/research">INITIATIVES</a></div>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+                </svg>
+            </div>
+            <div class="absolute left-0 w-64 mt-0 origin-top-left bg-white border border-gray-200 rounded-md shadow-lg dropdown-menu hidden">
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Research & Publications</a>
+                <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Advocacy & Scholarships</a>
+            </div>
+        </div>
+
+        </div>
       </nav>
     </div>
 </header>
+
+<style>
+  /* handles hover dropdown visibility */
+  .dropdown:hover .dropdown-menu {
+      display: block;
+  }
+</style>
