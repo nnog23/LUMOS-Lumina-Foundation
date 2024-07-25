@@ -1,0 +1,65 @@
+
+
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="flex flex-col justify-center items-center">
+        <div class="carousel relative w-full max-w-6xl overflow-hidden rounded-t-lg bg-white">
+            <div class="carousel-inner relative w-full flex">
+                <div class="carousel-item w-full flex-shrink-0">
+                    <img src="../../public/images/home1.png" alt="Image 1" class="w-full">
+                </div>
+                <div class="carousel-item w-full flex-shrink-0">
+                    <img src="../../public/images/home2.png" alt="Image 2" class="w-full">
+                </div>
+                <div class="carousel-item w-full flex-shrink-0">
+                    <img src="../../public/images/home3.png" alt="Image 3" class="w-full">
+                </div>
+                <div class="carousel-item w-full flex-shrink-0">
+                    <img src="../../public/images/home4.png" alt="Image 4" class="w-full">
+                </div>
+            </div>
+            <button id="prev" class="absolute left-0 top-1/2 transform -translate-y-1/2 text-white hover:text-primary-100 transition ease-out px-4 py-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6 shadow-lg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                </svg>  
+            </button>
+            
+            <button id="next" class="absolute right-0 top-1/2 transform -translate-y-1/2 text-white hover:text-primary-100 transition ease-out px-4 py-2">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6 shadow-lg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                </svg>  
+            </button>
+            
+        </div>
+        <div class="px-16 py-5 w-full max-w-6xl overflow-hidden rounded-b-lg bg-white">
+            Welcome to Lumina Foundation for Integral Human Development, where we strive to unlock the full potential of human flourishing. We aim to empower individuals, organizations, and communities and equip them with the tools and resources to thrive and make meaningful global contributions.
+            <br>
+            <br>
+            Our leaf emblem represents the boundless growth within each of us and our commitment to nurturing human potential. Alongside the leaf, a resolute book symbolizes our dedication to creating and sharing transformative knowledge.
+            <br>
+            <br>
+            Together, let us explore new frontiers, discover innovative solutions and foster sustainable pathways for integral human development!
+        </div>
+    </div>
+        
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let currentIndex = 0;
+            const items = document.querySelectorAll('.carousel-item');
+            const totalItems = items.length;
+
+            document.getElementById('next').addEventListener('click', function() {
+                items[currentIndex].classList.add('hidden');
+                currentIndex = (currentIndex + 1) % totalItems;
+                items[currentIndex].classList.remove('hidden');
+            });
+
+            document.getElementById('prev').addEventListener('click', function() {
+                items[currentIndex].classList.add('hidden');
+                currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+                items[currentIndex].classList.remove('hidden');
+            });
+        });
+    </script>
+    
+</body>

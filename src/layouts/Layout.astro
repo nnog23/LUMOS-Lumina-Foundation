@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Home from '../components/Home.astro';
 ---
 
 
@@ -19,6 +20,9 @@ import Footer from '../components/Footer.astro';
   </head>
   <body class="bg-light-100">
 	<Header />
+  <div class="flex flex-col justify-center items-center">
+    <Home />
+  </div>
   <Footer />
 	<slot>
 
