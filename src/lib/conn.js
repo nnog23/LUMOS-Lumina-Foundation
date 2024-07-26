@@ -1,24 +1,17 @@
-import { MongoClient } from 'mongodb';
+import mongoose from 'mongoose';
 
-const uri = process.env.MONGODB_URI; // Ensure this environment variable is set
-let client;
-let clientPromise;
+const mongoURI = process.env.MONGODB_URI;
 
-if (!uri) {
-  throw new Error('Please add your MongoDB URI to the environment variables');
+export function connectToMongo(dbName = process.env.DB_NAME) {
+  return mongoose.connect(mongoURI, { dbName: dbName });
+};
+
+function signalHandler() {
+  console.log("Closing MongoDB connection...");
+  mongoose.disconnect();
+  process.exit();
 }
 
-if (process.env.NODE_ENV === 'development') {
-  // In development mode, use a global variable to prevent multiple instances
-  if (!global._mongoClientPromise) {
-    client = new MongoClient(uri);
-    global._mongoClientPromise = client.connect();
-  }
-  clientPromise = global._mongoClientPromise;
-} else {
-  // In production mode, create a new MongoClient instance
-  client = new MongoClient(uri);
-  clientPromise = client.connect();
-}
-
-export default clientPromise;
+process.on("SIGINT", signalHandler);
+process.on("SIGTERM", signalHandler);
+process.on("SIGQUIT", signalHandler);
