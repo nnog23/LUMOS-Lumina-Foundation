@@ -1,0 +1,66 @@
+---
+const { type } = Astro.props;
+---
+<!DOCTYPE html>
+<div class=" flex flex-col"> 
+    <div id="container" class="flex flex-col items-end">
+        <div class="mb-4 self-center sm:self-end sm:mr-20">
+            <button class="bg-white right-0 h-9 w-full mr-12 rounded p-2 hover:bg-blue-900 hover:text-white ease-in-out duration-200">Add {type}</button>
+        </div>
+        <div class="tableContainer w-full flex items-center justify-center">
+            <table class="bg-white w-full sm:w-11/12">
+                <thead class="text-xs text-black uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="w-1/12 px-6 py-3">ID</th>
+                        <th scope="col" class="w-8/12 px-6 py-3">Title</th>
+                        <th scope="col" class="w-3/12 px-6 py-3">Action</th>
+                      </tr>
+                </thead>
+                <!-- Sample Entry -->
+                <tbody>
+                    <tr class="bg-white border-b border-r hover:bg-gray-50">
+                        <th scope="row" class="px-6 py-4  whitespace-nowrap">1</th>
+                        <th class="text-left">Welcome to Lumina Foundation</th>
+                        <th class="flex items-center justify-center">
+                            <div class="flex flex-col flex-wrap justify-evenly sm:flex-row gap-4 py-4">
+                                <button class="text-blue-600 hover:underline-offset-2 hover:underline">Edit</button>
+                                <button class="text-red-600 hover:underline-offset-2 hover:underline">Delete</button>
+                                <button class="text-green-600 hover:underline-offset-2 hover:underline">Publish</button>  
+                            </div>             
+                        </th>
+                    </tr>
+                    <!-- End of Sample Entry -->
+                     <!-- Sample Entry -->
+                    <tr class="bg-white border-b border-r hover:bg-gray-50">
+                        <th>2</th>
+                        <th class="text-left">Luminary Excellence in Education and Research Awards 2024 </th>
+                        <th class="flex items-center justify-center">
+                            <div class="flex flex-col flex-wrap justify-evenly sm:flex-row gap-4 py-4">
+                                <button class="text-blue-600 hover:underline-offset-2 hover:underline">Edit</button>
+                                <button class="text-red-600 hover:underline-offset-2 hover:underline">Delete</button>
+                                <button class="text-green-600 hover:underline-offset-2 hover:underline">Publish</button>  
+                            </div>             
+                        </th>
+                    </tr>
+                    <!-- End of Sample Entry -->
+                     <!-- Sample Entry -->
+                    <tr class="bg-white border-b border-r hover:bg-gray-50">
+                        <th>3</th>
+                        <th class="text-left">Luminary Excellence in Education and Research Awards 2025 </th>
+                        <th class="flex items-center justify-center ">
+                            <div class="flex flex-col flex-wrap justify-evenly sm:flex-row gap-4 py-4">
+                                <button class="text-blue-600 hover:underline-offset-2 hover:underline">Edit</button>
+                                <button class="text-red-600 hover:underline-offset-2 hover:underline">Delete</button>
+                                <button class="text-green-600 hover:underline-offset-2 hover:underline">Publish</button>  
+                            </div>             
+                        </th>
+                    </tr>
+                    <!-- End of Sample Entry -->
+                </tbody>
+                
+            </table>
+        </div>
+    </div>
+</div>
+
+

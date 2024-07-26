@@ -1,0 +1,26 @@
+---
+import AdminTable from "../../components/AdminTable.astro";
+import AdminLayout from "../../layouts/AdminLayout.astro";
+---
+
+<AdminLayout title="Manage News">
+    <main class="relative">
+        <AdminTable type="News"/>
+    </main>
+</AdminLayout>
+
+<style>
+  * {
+    transition: all 2s ease-in-out;
+  }
+  .smooth-scroll {
+    scroll-behavior: smooth;
+  }
+  .custom {
+    height: 100%;
+    width: 100%;
+  }
+  .animate__animated.animate__fadeInRightBig {
+    --animate-duration: 0s;
+  }
+</style>
