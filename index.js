@@ -16,7 +16,7 @@ async function main () {
     
     // Serve static files from the 'dist' directory
     app.use(express.static(path.join(__dirname, 'dist')));
-    
+    app.use('/static', express.static('public/static'));
     // Serve index.html for the root path
     app.get('/', (req, res) => {
         res.sendFile(path.join(__dirname, 'dist', 'index.html'));

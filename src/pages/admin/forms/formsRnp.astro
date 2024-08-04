@@ -1,13 +1,16 @@
 ---
-import AdminTableMongo from "../../components/AdminTableMongo.astro";
-import AdminLayout from "../../layouts/AdminLayout.astro";
+import AdminCreate from "../../../components/AdminCreate.astro";
+import AdminFormLayout from "../../../layouts/AdminFormLayout.astro";
 ---
 
-<AdminLayout title="Manage Research and Publications">
+<AdminFormLayout title="Create Rnp" type = "Rnp">
+
     <main class="relative">
-      <AdminTableMongo type="Rnp" form = "/admin/forms/formsRnp"/>
+      <AdminCreate type = "rnp" uptype = "Rnp"/>
     </main>
-</AdminLayout>
+    
+</AdminFormLayout>
+
 
 <style>
   * {

@@ -1,7 +1,7 @@
 import { SchemaTypes, Schema, model } from 'mongoose'; // ES6 syntax
 // const { SchemaTypes, Schema, model } = require('mongoose'); // CommonJS (default)
 
-const newsSchema = new Schema({
+const rnpSchema = new Schema({
     title: {
         type: SchemaTypes.String,
         required: true
@@ -19,7 +19,7 @@ const newsSchema = new Schema({
     }
 });
 
-const News = model('News', newsSchema); // news collection 
+const Rnp = model('Rnp', rnpSchema); // rnp collection 
 
-export default News;
-// module.exports = News;
+export default Rnp;
+// module.exports = Rnp;

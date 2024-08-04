@@ -1,0 +1,102 @@
+---
+const {type, form} = Astro.props;
+
+---
+
+<!DOCTYPE html>
+<div class=" flex flex-col " data-type={type}> 
+    <div id="container" class="flex flex-col items-end">
+        <div class="mb-4 self-center sm:self-end sm:mr-20">
+            <a href = {form} class="bg-white right-0 h-9 w-full mr-12 rounded p-2 hover:bg-blue-900 hover:text-white ease-in-out duration-200">Add {type}</a>
+        </div>
+        <div class="tableContainer w-full flex items-center justify-center">
+            <table class="bg-white w-full sm:w-11/12">
+                <thead class="text-xs text-black uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="w-1/12 px-6 py-3">ID</th>
+                        <th scope="col" class="w-8/12 px-6 py-3">Title</th>
+                        <th scope="col" class="w-3/12 px-6 py-3">Action</th>
+                      </tr>
+                </thead>
+                <tbody>
+                
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    let collection = [];
+    const container = document.querySelector('div[data-type]');
+    const type = container.getAttribute('data-type').toLowerCase();
+    const url = '/' + type;
+    
+    async function fetchData() {
+
+        try {
+            const response = await fetch(url);
+            if (response.ok) {
+                collection = await response.json();
+                updateTable();
+            } else {
+                console.error('Failed to fetch data:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    }
+
+    function updateTable() {
+
+        let counter = 1;
+
+        const tableBody = document.querySelector('tbody');
+        tableBody.innerHTML = '';
+        collection.forEach(item => {
+            const row = document.createElement('tr');
+            row.classList.add('bg-white', 'border-b', 'border-r', 'hover:bg-gray-50');
+            
+            const idCell = document.createElement('th');
+            idCell.scope = 'row';
+            idCell.classList.add('px-6', 'py-4', 'whitespace-nowrap');
+            idCell.textContent = counter.toString();
+            counter++;
+
+            const titleCell = document.createElement('th');
+            titleCell.classList.add('text-left');
+            titleCell.textContent = item.title;
+            
+            const actionCell = document.createElement('th');
+            actionCell.classList.add('flex', 'items-center', 'justify-center');
+
+            if(item.published == 0){
+                actionCell.innerHTML = `
+                    <div class="flex flex-col flex-wrap justify-evenly sm:flex-row gap-4 py-4">
+                        <button id = "editNews" class="text-blue-600 hover:underline-offset-2 hover:underline">Edit</button>
+                        <button id = "deleteNews" class="text-red-600 hover:underline-offset-2 hover:underline">Delete</button>
+                        <button class="text-green-600 hover:underline-offset-2 hover:underline">Publish</button>
+                    </div>`;
+            } else {
+                actionCell.innerHTML = `
+                    <div class="flex flex-col flex-wrap justify-evenly sm:flex-row gap-4 py-4">
+                        <button id = "editNews" class="text-blue-600 hover:underline-offset-2 hover:underline">Edit</button>
+                        <button id = "deleteNews" class="text-red-600 hover:underline-offset-2 hover:underline">Delete</button>
+                        <button class="text-yellow-600 hover:underline-offset-2 hover:underline">Unpublish</button>
+                    </div>`;
+            }
+
+            row.appendChild(idCell);
+            row.appendChild(titleCell);
+            row.appendChild(actionCell);
+            tableBody.appendChild(row);
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchData();
+        setInterval(fetchData, 5000);
+    });
+
+</script>

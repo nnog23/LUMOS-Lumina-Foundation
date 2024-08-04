@@ -1,28 +1,28 @@
 import { Router } from 'express';
-import News from '../models/News.js';
+import Rnp from '../models/Rnp.js';
 
-const newsRouter = Router();
+const rnpRouter = Router();
 
-newsRouter.get('/', (req, res) => {
+rnpRouter.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
-newsRouter.get("/news", async (req, res) => {
+rnpRouter.get("/rnp", async (req, res) => {
     try {
-        const collection = await News.find({}).lean().exec();
+        const collection = await Rnp.find({}).lean().exec();
         res.json(collection);
 
     } catch (err) {
         console.error(err);
-        res.redirect('/admin/news');
+        res.redirect('/admin/rnp');
     }
 });
 
 
-newsRouter.post("/news", async (req, res) => {
-    console.log("POST request received for /news");
+rnpRouter.post("/rnp", async (req, res) => {
+    console.log("POST request received for /rnp");
     try {
-        const result = await News.create({
+        const result = await Rnp.create({
             title: req.body.title, 
             body: req.body.body,
             dateTime: req.body.date,
@@ -30,12 +30,12 @@ newsRouter.post("/news", async (req, res) => {
         });
 
         console.log(result);
-        res.redirect('/admin/news');
-        
+        res.redirect('/admin/rnp');
+
     } catch (err) {
         console.error(err);
         res.sendStatus(500);
     }
 });
 
-export default newsRouter;
+export default rnpRouter;
