@@ -1,28 +1,28 @@
 import { Router } from 'express';
-import News from '../models/News.js';
+import Events from '../models/Events.js';
 
-const newsRouter = Router();
+const eventsRouter = Router();
 
-newsRouter.get('/', (req, res) => {
+eventsRouter.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
 });
 
-newsRouter.get("/news", async (req, res) => {
+eventsRouter.get("/events", async (req, res) => {
     try {
-        const collection = await News.find({}).lean().exec();
+        const collection = await Events.find({}).lean().exec();
         res.json(collection);
 
     } catch (err) {
         console.error(err);
-        res.redirect('/admin/news');
+        res.redirect('/admin/events');
     }
 });
 
 
-newsRouter.post("/news", async (req, res) => {
-    console.log("POST request received for /news");
+eventsRouter.post("/events", async (req, res) => {
+    console.log("POST request received for /events");
     try {
-        const result = await News.create({
+        const result = await Events.create({
             title: req.body.title, 
             body: req.body.body,
             dateTime: req.body.date,
@@ -30,7 +30,7 @@ newsRouter.post("/news", async (req, res) => {
         });
 
         console.log(result);
-        res.redirect('/admin/news');
+        res.redirect('/admin/events');
         
     } catch (err) {
         console.error(err);
@@ -38,4 +38,4 @@ newsRouter.post("/news", async (req, res) => {
     }
 });
 
-export default newsRouter;
+export default eventsRouter;

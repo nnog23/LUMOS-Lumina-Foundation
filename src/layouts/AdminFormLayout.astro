@@ -1,0 +1,54 @@
+---
+import "@fontsource/inter/100.css";
+import "@fontsource/inter/200.css";
+import "@fontsource/inter/300.css";
+import "@fontsource/inter/400.css";
+import "@fontsource/inter/500.css";
+import "@fontsource/inter/600.css";
+import "@fontsource/inter/700.css";
+import "@fontsource/inter/800.css";
+import "@fontsource/inter/900.css";
+import AdminFormHeader from "../components/AdminFormHeader.astro";
+const { type, title } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <AdminFormHeader />
+    <div class="flex">
+        <div class="w-full">
+            <div class=" flex align-middle justify-center h-16 sm:h-14 font-bold p-2 py-6 mb-3 sm:mb-0">
+              <p class="text-lg">{title}</p>
+            </div>
+            <slot />
+        </div>
+    </div>
+    
+  
+    
+    <style is:global>
+      * {
+
+      }
+      img {
+        content-visibility: auto;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        line-height: normal;
+        background-color: #000000;
+        background: #F5F5F5;
+        overflow-x: hidden;
+      }
+    </style>
+  </body>
+</html>

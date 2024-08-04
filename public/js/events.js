@@ -1,10 +1,10 @@
-// FRONT-END JS For News view
-const submitBtn = document.querySelector("#createNews");
-const newsForm = document.forms.createNewsForm;
+// FRONT-END JS For Events view
+const submitBtn = document.querySelector("#createEvents");
+const eventsForm = document.forms.createEventsForm;
 
 submitBtn?.addEventListener("click", async (e) => {
     e.preventDefault();
-    const formData = new FormData(newsForm);
+    const formData = new FormData(eventsForm);
     console.log('submit');
     const myObj = { 
         title: formData.get("title"),
@@ -17,7 +17,7 @@ submitBtn?.addEventListener("click", async (e) => {
     console.log(jString);
 
     try {
-        const response = await fetch("/news", {
+        const response = await fetch("/events", {
             method: 'POST',
             body: jString,
             headers: {

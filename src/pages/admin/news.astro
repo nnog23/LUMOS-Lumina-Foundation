@@ -1,11 +1,11 @@
 ---
-import AdminTable from "../../components/AdminTable.astro";
+import AdminTableMongo from "../../components/AdminTableMongo.astro";
 import AdminLayout from "../../layouts/AdminLayout.astro";
 ---
 
 <AdminLayout title="Manage News">
     <main class="relative">
-        <AdminTable type="News"/>
+        <AdminTableMongo type="News" form = "/admin/forms/formsNews"/>
     </main>
 </AdminLayout>
 
@@ -24,3 +24,4 @@ import AdminLayout from "../../layouts/AdminLayout.astro";
     --animate-duration: 0s;
   }
 </style>
+

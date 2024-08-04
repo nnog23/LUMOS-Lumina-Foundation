@@ -1,11 +1,11 @@
 ---
-import AdminTable from "../../components/AdminTable.astro";
+import AdminTableMongo from "../../components/AdminTableMongo.astro";
 import AdminLayout from "../../layouts/AdminLayout.astro";
 ---
 
 <AdminLayout title="Manage Events">
     <main class="relative">
-        <AdminTable type="Event"/>
+        <AdminTableMongo type="Events" form ="/admin/forms/formsEvents"/>
     </main>
 </AdminLayout>
 
