@@ -38,4 +38,99 @@ rnpRouter.post("/rnp", async (req, res) => {
     }
 });
 
+rnpRouter.get('/admin/forms/edit/editRnp/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const rnpItem = await Rnp.findById(id);
+        if (rnpItem) {
+            
+            res.render('editRnp', {initialData : rnpItem})
+
+        } else {
+            res.status(404).send('Rnp item not found');
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
+});
+
+rnpRouter.put('/rnp/:id', async (req, res) => {
+    const { id } = req.params;
+    const { title, body, date } = req.body;
+    try {
+        const updatedRnpItem = await Rnp.findByIdAndUpdate(
+            id,
+            { title, body, date},
+            { new: true } // Return the updated document
+        );
+        
+        if (updatedRnpItem) {
+            res.redirect('/')
+        } else {
+            res.status(404).send('Rnp item not found');
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
+});
+
+rnpRouter.delete('/deleternp/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const result = await Rnp.findByIdAndDelete(id);
+        
+        if (result) {
+            res.status(200).send('Rnp item deleted successfully');
+        } else {
+            res.status(404).send('Rnp item not found');
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
+});
+
+rnpRouter.put('/publishrnp/:id', async (req, res) => {
+    const { id } = req.params;
+    const published = 1;
+    try {
+        const updatedRnpItem = await Rnp.findByIdAndUpdate(
+            id,
+            { published},
+            { new: true } // Return the updated document
+        );
+        
+        if (updatedRnpItem) {
+            res.redirect('/')
+        } else {
+            res.status(404).send('Rnp item not found');
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
+});
+
+rnpRouter.put('/unpublishrnp/:id', async (req, res) => {
+    const { id } = req.params;
+    const published = 0;
+    try {
+        const updatedRnpItem = await Rnp.findByIdAndUpdate(
+            id,
+            { published},
+            { new: true } // Return the updated document
+        );
+        
+        if (updatedRnpItem) {
+            res.redirect('/')
+        } else {
+            res.status(404).send('Rnp item not found');
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
+});
 export default rnpRouter;
