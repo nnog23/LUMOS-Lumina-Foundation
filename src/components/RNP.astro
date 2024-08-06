@@ -1,0 +1,209 @@
+---
+const {type, form} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RNP Card Grid with Expanded View</title>
+    <style>
+        /* Modal styles */
+        #modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        #modalContent {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+        }
+        #closeModal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 24px;
+        }
+    </style>
+</head>
+<body>
+    <!-- -->
+
+    <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+        <div class="flex flex-col justify-center items-center">
+            
+            <div class="relative w-full max-w-6xl rounded-lg bg-white">
+                
+                <div class="px-16 py-8 w-full max-w-6xl bg-white">
+                    <h1 class="flex text-xl font-semibold justify-center">International Journal of Research Studies in Education</h1>
+                    <br>
+                    Consortia Academia is a non-profit organization founded in 2005 by scholars from the Asia-Pacific and the United States. Consortia Academia seeks to provide an avenue for novice and expert scholars and researchers to publish and share their work to the academe through an open-access environment. Starting 2019, in line with expanding its mission and vision, Consortia Academia partnered with Network of Professional Researchers and Educators (NPRE), a non-stock, non-profit organization committed to the professional growth of professional researchers and educators in the ASEAN region.
+                </div>
+                
+            </div>
+    
+            <br>
+            <h1 class="flex text-xl font-semibold justify-center">Current Publications</h1>
+        
+            </div>
+        </div>
+    </body>
+
+    <!-- -->
+
+    <div class="flex flex-col" data-type="rnp">
+        <div id="container" class="flex flex-col items-end">
+            <div id="cardsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+                <!-- Cards will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for expanded view -->
+    <div id="modal" class="flex">
+        <div id="modalContent" class="relative">
+            <span id="closeModal" class="text-red-600">&times;</span>
+            <h3 id="modalTitle" class="text-xl font-semibold"></h3>
+            <p id="modalBody" class="text-gray-700 mt-2"></p>
+            <p id="modalDate" class="text-gray-500 mt-2 text-sm"></p>
+        </div>
+    </div>
+
+    <!-- -->
+
+    <body class="bg-gray-100 flex items-center justify-center min-h-screen">
+        <br>
+        <div class="flex flex-col justify-center items-center">
+            
+            <div class="relative w-full max-w-6xl rounded-lg bg-white">
+                
+                <div class="px-16 py-8 w-full max-w-6xl bg-white">
+                    <h1 class="flex text-xl font-semibold justify-center">Asia Pacific Journal of Multidisciplinary Research : Publication Partner of Lumina Foundation</h1>
+                    <br>
+                    <p class="text-center">The Asia Pacific Journal of Multidisciplinary Research is the official publication partner of the Lumina Foundation.  </p>
+                    <br>
+                    The Asia Pacific Journal of Multidisciplinary Research (APJMR) is the official research journal of the Graduate School with Lyceum of the Philippines University-Batangas as its publisher which aims to provide a medium open to the global community of scholars who aspire to have their researches published in a peer-reviewed journal.
+                    <br>
+                </div>
+            </div>
+
+            <br>
+
+            <div class="relative w-full max-w-6xl rounded-lg bg-white">
+                
+                <div class="px-16 py-8 w-full max-w-6xl bg-white">
+                    <h1 class="flex text-xl font-semibold justify-center">SCOPE</h1>
+                    <h1 class="flex text-xl font-semibold justify-center">The journal publishes quarterly issues in various disciplines limited to:</h1>
+                    <br>
+                    <div class="flex flex-col justify-center items-center">
+                        <ul class="list-disc">
+                            <li>Social Sciences</li>
+                            <li>Education, Arts, and Humanities</li>
+                            <li>Science, Technology, Engineering, and Mathematics</li>
+                        </ul>
+                    <br>
+
+                    The journal primarily has, as its audience, scientists, academicians, practitioners of various fields, policymakers, health advocates, graduate students, and other individuals interested in pushing the frontiers of developing innovative ideas for social and global transformation.
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <!-- -->
+
+    <script>
+        let collection = [];
+        const container = document.querySelector('div[data-type]');
+        const type = container.getAttribute('data-type').toLowerCase();
+        const url = '/' + type;
+
+        async function fetchData() {
+            try {
+                const response = await fetch(url);
+                if (response.ok) {
+                    collection = await response.json();
+                    updateCards();
+                } else {
+                    console.error('Failed to fetch data:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+
+        function formatBody(body) {
+            return body.replace(/\n/g, '<br>');
+        }
+
+        function formatDate(dateTime) {
+            const date = new Date(dateTime);
+            return date.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        function updateCards() {
+            const cardsContainer = document.getElementById('cardsContainer');
+            cardsContainer.innerHTML = '';
+
+            collection.forEach(item => {
+                console.log('Item:', item); // Log item data to verify
+                const card = document.createElement('div');
+                card.classList.add('bg-white', 'p-4', 'rounded', 'shadow-lg', 'relative', 'w-64', 'h-full', 'cursor-pointer');
+                card.dataset.title = item.title;
+                card.dataset.body = item.body;
+                card.dataset.date = item.dateTime;
+
+                const title = document.createElement('h3');
+                title.classList.add('text-xl', 'font-semibold');
+                title.textContent = item.title;
+
+                const date = document.createElement('p');
+                date.classList.add('text-gray-500', 'text-sm');
+                date.textContent = formatDate(item.dateTime) || 'No date available'; // Fallback text
+
+                card.appendChild(title);
+                card.appendChild(date);
+                card.addEventListener('click', () => showModal(item));
+
+                cardsContainer.appendChild(card);
+            });
+        }
+
+        function showModal(item) {
+            document.getElementById('modalTitle').textContent = item.title;
+            document.getElementById('modalBody').innerHTML = formatBody(item.body);
+            document.getElementById('modalDate').textContent = formatDate(item.dateTime) || 'No date available'; // Fallback text
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        document.getElementById('closeModal').addEventListener('click', closeModal);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchData();
+            setInterval(fetchData, 5000);
+        });
+    </script>
+</body>
+</html>
