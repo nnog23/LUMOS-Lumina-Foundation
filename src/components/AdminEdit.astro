@@ -1,0 +1,66 @@
+---
+const {type, uptype, initialdata} = Astro.props;
+const link = "/admin/" + type;
+const url = "/js/" + type + ".js";
+const formID = "edit" + uptype + "Form";
+const buttonID = "confirmedit" + uptype;
+---
+
+<script src= {url} defer></script>
+
+<div id="form" class="bg-blue-900 hs-screen w-full sm:full  pt-3">
+    <div id="buttonContainer" class=" flex flex-col justify-evenly">
+        <a href = {link} class = "text-black bg-white flex items-center justify-center text-center mx-5 h-8 sm:h-10 my-5 sm:mx-20 font-semibold rounded hover:bg-blue-600 hover:text-white duration-200"> Back</a>
+        <div class="flex items-center justify-center text-center font-bold text-white pb-2 w-full">
+                  
+            <form id= {formID} name= {formID} class="w-full" >
+                <fieldset>
+                    <div class = "bg-white sm:mx-20 p-2 m-5 rounded h-30">
+                    <input type="text" name="title" placeholder= ""class = "w-full text-black focus:outline-none">
+                    </div>
+                    <div class = "bg-white sm:mx-20 p-2 m-5 rounded h-110">
+                    <textarea rows = "17" name="body" placeholder= "" class = "w-full text-black focus:outline-none text-wrap resize-none"></textarea>
+                    </div> 
+                    <input type="file" id="myfile" name="myfile" accept=".png, .jpg, .jpeg">
+                    
+                    <div class = "bg-white sm:mx-20 p-2 m-5 rounded h-125 sm:h-100">
+                        <input type="datetime-local" name="date" placeholder = "" class= "text-black sm:full">
+                    </div> 
+
+                    <div style="cursor: pointer;" class="text-black bg-white flex items-center justify-center text-center mx-5 h-16 sm:h-20 my-5 sm:mx-20 font-semibold rounded hover:bg-blue-600 hover:text-white duration-200">
+                        <button id = {buttonID} type="submit" class = "w-full h-full" > Confirm Edit</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const { uptype } = Astro.props;  // Assuming `type` is part of Astro props
+        const id = new URLSearchParams(window.location.search).get('id'); // Get ID from query string
+        const url = `/edit${uptype}/${id}`;  // Construct URL to fetch data
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                // Populate form fields with fetched data
+                const titleInput = document.querySelector('input[name="title"]') as HTMLInputElement;
+                const bodyTextarea = document.querySelector('textarea[name="body"]') as HTMLTextAreaElement;
+                const dateInput = document.querySelector('input[name="date"]') as HTMLInputElement;
+
+                // Assign values, using default empty values if `data` properties are undefined
+                titleInput.value = data.title || '';
+                bodyTextarea.value = data.body || '';
+                dateInput.value = data.date ? new Date(data.date).toISOString().slice(0, 16) : '';
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    });
+
+</script>

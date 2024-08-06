@@ -29,7 +29,9 @@ const {type, form} = Astro.props;
 <script>
 
     let collection = [];
+   
     const container = document.querySelector('div[data-type]');
+    const uptype = container.getAttribute('data-type');
     const type = container.getAttribute('data-type').toLowerCase();
     const url = '/' + type;
     
@@ -51,7 +53,6 @@ const {type, form} = Astro.props;
     function updateTable() {
 
         let counter = 1;
-
         const tableBody = document.querySelector('tbody');
         tableBody.innerHTML = '';
         collection.forEach(item => {
@@ -70,20 +71,22 @@ const {type, form} = Astro.props;
             
             const actionCell = document.createElement('th');
             actionCell.classList.add('flex', 'items-center', 'justify-center');
-
+            
             if(item.published == 0){
                 actionCell.innerHTML = `
                     <div class="flex flex-col flex-wrap justify-evenly sm:flex-row gap-4 py-4">
-                        <button id = "editNews" class="text-blue-600 hover:underline-offset-2 hover:underline">Edit</button>
-                        <button id = "deleteNews" class="text-red-600 hover:underline-offset-2 hover:underline">Delete</button>
+                        <button id = "edit${type}-${item._id}" data-id="${item._id}" class="text-blue-600 hover:underline-offset-2 hover:underline">Edit</button>
+                        <button id = "delete${type}-${item._id}" data-id="${item._id}" class="text-red-600 hover:underline-offset-2 hover:underline">Delete</button>
                         <button class="text-green-600 hover:underline-offset-2 hover:underline">Publish</button>
+                        ${item._id}
                     </div>`;
             } else {
                 actionCell.innerHTML = `
                     <div class="flex flex-col flex-wrap justify-evenly sm:flex-row gap-4 py-4">
-                        <button id = "editNews" class="text-blue-600 hover:underline-offset-2 hover:underline">Edit</button>
-                        <button id = "deleteNews" class="text-red-600 hover:underline-offset-2 hover:underline">Delete</button>
+                        <button id = "edit${type}-${item._id}" data-id="${item._id}" class="text-blue-600 hover:underline-offset-2 hover:underline">Edit</button>
+                        <button id = "delete${type}-${item._id}" data-id="${item._id}" class="text-red-600 hover:underline-offset-2 hover:underline">Delete</button>
                         <button class="text-yellow-600 hover:underline-offset-2 hover:underline">Unpublish</button>
+                        ${item._id}
                     </div>`;
             }
 
@@ -92,11 +95,24 @@ const {type, form} = Astro.props;
             row.appendChild(actionCell);
             tableBody.appendChild(row);
         });
+
+        const editBtns = document.querySelectorAll(`[id^='edit${type}']`);
+        
+        editBtns.forEach(btn => {
+            btn.addEventListener("click", (e) => {
+            const target = e.target as HTMLElement;
+            const id = target.dataset.id; // Get the news ID from data-id attribute
+            window.location.href = `/admin/forms/edit/edit${uptype}/${id}`; // Redirect to the edit page with the ID
+        });
+        });
+
     }
 
     document.addEventListener('DOMContentLoaded', () => {
         fetchData();
         setInterval(fetchData, 5000);
     });
+    
 
 </script>
+

@@ -22,6 +22,7 @@ async function main () {
         res.sendFile(path.join(__dirname, 'dist', 'index.html'));
     });
     
+    app.set('view engine', 'ejs');
     app.use(express.json());
 
     app.use(router);
