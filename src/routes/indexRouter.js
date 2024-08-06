@@ -28,14 +28,6 @@ router.use(newsRouter);
 router.use(eventsRouter);
 router.use(rnpRouter);
 
-// router.use(userRouter);
-// router.use(postsRouter);
-
-router.use((req, res) => {
-    res.render("error", {
-        title: "Page not Found."
-    });
-});
 
 export default router;
 // In CommonJS, `export default userRouter` is equivalent to:

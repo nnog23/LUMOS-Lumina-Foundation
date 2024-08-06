@@ -59,10 +59,11 @@ eventsRouter.get('/admin/forms/edit/editEvents/:id', async (req, res) => {
 eventsRouter.put('/events/:id', async (req, res) => {
     const { id } = req.params;
     const { title, body, date } = req.body;
+    const dateTime = date;
     try {
         const updatedEventsItem = await Events.findByIdAndUpdate(
             id,
-            { title, body, date},
+            { title, body, dateTime},
             { new: true } // Return the updated document
         );
         

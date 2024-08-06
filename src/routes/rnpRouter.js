@@ -58,10 +58,11 @@ rnpRouter.get('/admin/forms/edit/editRnp/:id', async (req, res) => {
 rnpRouter.put('/rnp/:id', async (req, res) => {
     const { id } = req.params;
     const { title, body, date } = req.body;
+    const dateTime = date;
     try {
         const updatedRnpItem = await Rnp.findByIdAndUpdate(
             id,
-            { title, body, date},
+            { title, body, dateTime},
             { new: true } // Return the updated document
         );
         

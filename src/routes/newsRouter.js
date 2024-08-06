@@ -57,12 +57,15 @@ newsRouter.get('/admin/forms/edit/editNews/:id', async (req, res) => {
 });
 
 newsRouter.put('/news/:id', async (req, res) => {
+    
     const { id } = req.params;
     const { title, body, date } = req.body;
+    const dateTime = date;
+
     try {
         const updatedNewsItem = await News.findByIdAndUpdate(
             id,
-            { title, body, date},
+            { title, body, dateTime},
             { new: true } // Return the updated document
         );
         

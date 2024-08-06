@@ -32,7 +32,6 @@ async function main() {
   try {
     // Connect to MongoDB
     await connectToMongo();
-    console.log("Connected to MongoDB.");
     // Start Express App
     app.listen(process.env.PORT || PORT, () => {
       console.log("Express app now listening...");

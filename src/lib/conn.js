@@ -13,6 +13,8 @@ export function connectToMongo(dbName = process.env.DB_NAME) {
 
 let isConnected = false;
 
+mongoose.set('strictQuery', false);
+
 export async function connectToMongo(dbName = process.env.DB_NAME) {
   if (!isConnected) {
     await mongoose.connect(mongoURI, { dbName: dbName });
@@ -27,17 +29,6 @@ function signalHandler() {
   process.exit();
 }
 
-export async function getNews() {
-  try {
-      await connectToMongo();
-      const newsArray = await News.find({}).lean().exec();
-      return newsArray;
-
-  } catch (error) {
-      console.error("Error fetching news:", error);
-      throw error;
-  }
-}
 
 process.on("SIGINT", signalHandler);
 process.on("SIGTERM", signalHandler);
