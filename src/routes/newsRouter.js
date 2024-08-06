@@ -44,7 +44,7 @@ newsRouter.get('/admin/forms/edit/editNews/:id', async (req, res) => {
     try {
         const newsItem = await News.findById(id);
         if (newsItem) {
-            
+            newsItem.body = newsItem.body.trim();
             res.render('editNews', {initialData : newsItem})
 
         } else {

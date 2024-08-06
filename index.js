@@ -15,7 +15,7 @@ async function main() {
   const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
   // Serve static files from the 'dist' directory
-  //   app.use(express.static(path.join(__dirname, "dist")));
+  app.use(express.static(path.join(__dirname, "dist")));
   app.use(express.static(__dirname + "/public"));
 
   app.use("/static", express.static("public/static"));
