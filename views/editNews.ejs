@@ -1,0 +1,30 @@
+<script src= "/js/news.js" defer></script>
+<link rel="stylesheet" href="../../../../public/styles.css">
+
+<div id="form" class="bg-blue-900 hs-screen w-full sm:full pt-3">
+    <div id="buttonContainer" class="flex flex-col justify-evenly">
+        <a href="/admin/news" class="text-black bg-white flex items-center justify-center text-center mx-5 h-8 sm:h-10 my-5 sm:mx-20 font-semibold rounded hover:bg-blue-600 hover:text-white duration-200"> Back</a>
+        <div class="flex items-center justify-center text-center font-bold text-white pb-2 w-full">
+                  
+            <form id="editNewsForm" name="editNewsForm" class="w-full">
+                <fieldset>
+                    <div class="bg-red sm:mx-20 p-2 m-5 rounded h-30">
+                        <input type="text" name="title" class="w-full text-black focus:outline-none" value="<%= initialData.title %>" >
+                    </div>
+                    <div class="bg-white sm:mx-20 p-2 m-5 rounded h-110">
+                        <textarea rows="17" name="body" class="w-full text-black focus:outline-none text-wrap resize-none" ><%= initialData.body %></textarea>
+                    </div> 
+                    <input type="file" id="myfile" name="myfile" accept=".png, .jpg, .jpeg">
+                    
+                    <div class="bg-white sm:mx-20 p-2 m-5 rounded h-125 sm:h-100">
+                        <input type="datetime-local" name="date" class="text-black sm:full" value="<%= initialData.date %>">
+                    </div> 
+
+                    <div style="cursor: pointer;" class="text-black bg-white flex items-center justify-center text-center mx-5 h-16 sm:h-20 my-5 sm:mx-20 font-semibold rounded hover:bg-blue-600 hover:text-white duration-200">
+                        <button id="confirmeditNews" type="submit" class="w-full h-full"> Confirm Edit</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

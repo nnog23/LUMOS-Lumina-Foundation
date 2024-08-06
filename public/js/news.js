@@ -1,10 +1,13 @@
 // FRONT-END JS For News view
 const submitBtn = document.querySelector("#createNews");
-const newsForm = document.forms.createNewsForm;
+const confirmeditBtn = document.querySelector('#confirmeditNews');
+const deleteBtn = document.querySelector("#deleteNews");
+const createnewsForm = document.forms.createNewsForm;
+const editnewsForm = document.forms.editNewsForm;
 
 submitBtn?.addEventListener("click", async (e) => {
     e.preventDefault();
-    const formData = new FormData(newsForm);
+    const formData = new FormData(createnewsForm);
     console.log('submit');
     const myObj = { 
         title: formData.get("title"),
