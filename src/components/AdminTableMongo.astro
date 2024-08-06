@@ -77,16 +77,14 @@ const {type, form} = Astro.props;
                     <div class="flex flex-col flex-wrap justify-evenly sm:flex-row gap-4 py-4">
                         <button id = "edit${type}-${item._id}" data-id="${item._id}" class="text-blue-600 hover:underline-offset-2 hover:underline">Edit</button>
                         <button id = "delete${type}-${item._id}" data-id="${item._id}" class="text-red-600 hover:underline-offset-2 hover:underline">Delete</button>
-                        <button class="text-green-600 hover:underline-offset-2 hover:underline">Publish</button>
-                        ${item._id}
+                        <button id = "publish${type}-${item._id}" data-id="${item._id}" class="text-green-600 hover:underline-offset-2 hover:underline">Publish</button>
                     </div>`;
             } else {
                 actionCell.innerHTML = `
                     <div class="flex flex-col flex-wrap justify-evenly sm:flex-row gap-4 py-4">
                         <button id = "edit${type}-${item._id}" data-id="${item._id}" class="text-blue-600 hover:underline-offset-2 hover:underline">Edit</button>
                         <button id = "delete${type}-${item._id}" data-id="${item._id}" class="text-red-600 hover:underline-offset-2 hover:underline">Delete</button>
-                        <button class="text-yellow-600 hover:underline-offset-2 hover:underline">Unpublish</button>
-                        ${item._id}
+                        <button id = "unpublish${type}-${item._id}" data-id="${item._id}" class="text-yellow-600 hover:underline-offset-2 hover:underline">Unpublish</button>       
                     </div>`;
             }
 
@@ -97,14 +95,121 @@ const {type, form} = Astro.props;
         });
 
         const editBtns = document.querySelectorAll(`[id^='edit${type}']`);
-        
+        const deleteBtns = document.querySelectorAll(`[id^='delete${type}']`);
+        const publishBtns = document.querySelectorAll(`[id^='publish${type}']`);
+        const unpublishBtns = document.querySelectorAll(`[id^='unpublish${type}']`);
+
         editBtns.forEach(btn => {
             btn.addEventListener("click", (e) => {
             const target = e.target as HTMLElement;
-            const id = target.dataset.id; // Get the news ID from data-id attribute
+            const id = target.dataset.id; // Get the ID from data-id attribute
             window.location.href = `/admin/forms/edit/edit${uptype}/${id}`; // Redirect to the edit page with the ID
         });
         });
+
+        deleteBtns.forEach(btn => {
+            btn.addEventListener("click", async (e) => {
+            const target = e.target as HTMLElement;
+            const id = target.dataset.id; // Get the ID from data-id attribute
+        
+        if (id) {
+            const confirmDelete = confirm("Are you sure you want to delete this item?");
+            if (confirmDelete) {
+                try {
+                    const response = await fetch(`/delete${type}/${id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        // Redirect to /admin/news or reload the page to reflect the changes
+                        window.location.href = '/admin/news'; // Or use location.reload() to refresh the page
+                    } else {
+                        console.log("Error:", response.status);
+                        // Optionally handle errors or show a message to the user
+                    }
+                } catch (err) {
+                    console.error("Error:", err);
+                    // Optionally handle errors or show a message to the user
+                }
+            }
+        }
+    });
+});
+
+
+
+
+publishBtns.forEach(btn => {
+            btn.addEventListener("click", async (e) => {
+            const target = e.target as HTMLElement;
+            const id = target.dataset.id; // Get the ID from data-id attribute
+        
+        if (id) {
+            const confirmPublish = confirm("Are you sure you want to publish this item?");
+            if (confirmPublish) {
+                try {
+                    const response = await fetch(`/publish${type}/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        // Redirect to /admin/news or reload the page to reflect the changes
+                        const url = '/admin/' + type
+                        window.location.href = url; // Or use location.reload() to refresh the page
+                    } else {
+                        console.log("Error:", response.status);
+                        // Optionally handle errors or show a message to the user
+                    }
+                } catch (err) {
+                    console.error("Error:", err);
+                    // Optionally handle errors or show a message to the user
+                }
+            }
+        }
+    });
+});
+
+
+unpublishBtns.forEach(btn => {
+            btn.addEventListener("click", async (e) => {
+            const target = e.target as HTMLElement;
+            const id = target.dataset.id; // Get the ID from data-id attribute
+        
+        if (id) {
+            const confirmunPublish = confirm("Are you sure you want to unpublish this item?");
+            if (confirmunPublish) {
+                try {
+                    const response = await fetch(`/unpublish${type}/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        // Redirect to /admin/news or reload the page to reflect the changes
+                        const url = '/admin/' + type
+                        window.location.href = url; // Or use location.reload() to refresh the page
+                    } else {
+                        console.log("Error:", response.status);
+                        // Optionally handle errors or show a message to the user
+                    }
+                } catch (err) {
+                    console.error("Error:", err);
+                    // Optionally handle errors or show a message to the user
+                }
+            }
+        }
+    });
+});
+
+
 
     }
 
