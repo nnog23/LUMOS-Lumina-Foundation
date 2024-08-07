@@ -14,7 +14,7 @@
     "@fontsource/inter": "^5.0.20",
     "astro": "^4.11.6",
     "bson": "^6.8.0",
-    "cloudinary": "^2.4.0",
+    "cloudinary": "^1.21.0",
     "connect-mongodb-session": "^5.0.0",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",

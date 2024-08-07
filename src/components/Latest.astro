@@ -37,6 +37,13 @@ const {type, form} = Astro.props;
             cursor: pointer;
             font-size: 24px;
         }
+        #modalImage {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        
     </style>
 </head>
 <body>
@@ -53,6 +60,7 @@ const {type, form} = Astro.props;
     <div id="modal" class="flex">
         <div id="modalContent" class="relative">
             <span id="closeModal" class="text-red-600">&times;</span>
+            <img id="modalImage" src="" alt="Event Image">
             <h3 id="modalTitle" class="text-xl font-semibold"></h3>
             <p id="modalBody" class="text-gray-700 mt-2"></p>
             <p id="modalDate" class="text-gray-500 mt-2 text-sm"></p>
@@ -106,19 +114,25 @@ const {type, form} = Astro.props;
                 .forEach(item => {
                     console.log('Item:', item); // Log item data to verify
                     const card = document.createElement('div');
-                    card.classList.add('bg-white', 'p-4', 'rounded', 'shadow-lg', 'relative', 'w-80', 'h-full', 'cursor-pointer');
+                    card.classList.add('bg-white', 'p-0', 'rounded', 'shadow-lg', 'relative', 'w-80', 'h-full', 'cursor-pointer', 'overflow-hidden');
                     card.dataset.title = item.title;
                     card.dataset.body = item.body;
                     card.dataset.date = item.dateTime;
+                    card.dataset.imageurl = item.imageurl;
+
+                    const image = document.createElement('img');
+                    image.classList.add('w-full', 'h-48', 'object-cover', 'mb-4');
+                    image.src = item.imageurl; // Fallback image URL
 
                     const title = document.createElement('h3');
-                    title.classList.add('text-xl', 'font-semibold');
+                    title.classList.add('text-xl', 'font-semibold', 'px-4');
                     title.textContent = item.title;
 
                     const date = document.createElement('p');
-                    date.classList.add('text-gray-500', 'text-sm');
+                    date.classList.add('text-gray-500', 'text-sm', 'px-4', 'pb-4');
                     date.textContent = formatDate(item.dateTime) || 'No date available'; // Fallback text
 
+                    card.appendChild(image)
                     card.appendChild(title);
                     card.appendChild(date);
                     card.addEventListener('click', () => showModal(item));
@@ -131,6 +145,7 @@ const {type, form} = Astro.props;
             document.getElementById('modalTitle').textContent = item.title;
             document.getElementById('modalBody').innerHTML = formatBody(item.body);
             document.getElementById('modalDate').textContent = formatDate(item.dateTime) || 'No date available'; // Fallback text
+            document.getElementById('modalImage').src = item.imageurl;
             document.getElementById('modal').style.display = 'flex';
         }
 
