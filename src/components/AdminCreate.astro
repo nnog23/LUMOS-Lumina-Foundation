@@ -13,7 +13,7 @@ const buttonID = "create" + uptype;
         <a href = {link} class = "text-black bg-white flex items-center justify-center text-center mx-5 h-8 sm:h-10 my-5 sm:mx-20 font-semibold rounded hover:bg-blue-600 hover:text-white duration-200"> Back</a>
         <div class="flex items-center justify-center text-center font-bold text-white pb-2 w-full">
                   
-            <form id= {formID} name= {formID} class="w-full" >
+            <form id= {formID} name= {formID} class="w-full" enctype="multipart/form-data">
                 <fieldset>
                     <div class = "bg-white sm:mx-20 p-2 m-5 rounded h-30">
                     <input type="text" name="title" placeholder="Enter title" class = "w-full text-black focus:outline-none">
@@ -21,7 +21,8 @@ const buttonID = "create" + uptype;
                     <div class = "bg-white sm:mx-20 p-2 m-5 rounded h-110">
                     <textarea rows = "17" name="body" placeholder="Enter body" class = "w-full text-black focus:outline-none text-wrap resize-none"></textarea>
                     </div> 
-                    <input type="file" id="myfile" name="myfile" accept=".png, .jpg, .jpeg">
+
+                    <input type="file" id="name" name="image" accept=".png, .jpg, .jpeg">
                     
                     <div class = "bg-white sm:mx-20 p-2 m-5 rounded h-125 sm:h-100">
                         <input type="datetime-local" name="date" class= "text-black sm:full">

@@ -16,6 +16,10 @@ const newsSchema = new Schema({
     },
     published: {
         type: SchemaTypes.Number
+    },
+    imageurl: {
+        type: SchemaTypes.String,
+        required: true
     }
 });
 

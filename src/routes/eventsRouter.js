@@ -1,6 +1,8 @@
 import { Router } from 'express';
 import Events from '../models/Events.js';
 import { isAuthenticated } from './indexRouter.js';
+import upload from '../../upload.js'
+
 const eventsRouter = Router();
 
 eventsRouter.get("/events",  async (req, res) => {
@@ -15,16 +17,31 @@ eventsRouter.get("/events",  async (req, res) => {
 });
 
 
-eventsRouter.post("/events", isAuthenticated, async (req, res) => {
+eventsRouter.post("/events", isAuthenticated, upload.single('image'), async (req, res) => {
+
     console.log("POST request received for /events");
+
+    const file = req.file;
+
+    if(!file){
+
+        console.log("NO FILE")
+        return res.status(400).send('No file uploaded.');
+
+    }
+
     try {
+    
+        const imageUrl = file.path;
+
         const result = await Events.create({
             title: req.body.title, 
             body: req.body.body,
             dateTime: req.body.date,
-            published: 0
+            published: 0,
+            imageurl: imageUrl
         });
-
+        
         console.log(result);
         res.redirect('/admin/events');
         
@@ -52,14 +69,27 @@ eventsRouter.get('/admin/forms/edit/editEvents/:id', isAuthenticated, async (req
     }
 });
 
-eventsRouter.put('/events/:id', isAuthenticated, async (req, res) => {
+eventsRouter.put('/events/:id', isAuthenticated,  upload.single('image'), async (req, res) => {
+    
     const { id } = req.params;
     const { title, body, date } = req.body;
     const dateTime = date;
+    const file = req.file;
+
     try {
+
+        let imageUrl = null;
+
+        if (file) {
+            
+            imageUrl = file.path; // This is Cloudinary's URL for the uploaded image
+        }
+
+        const imageurl = imageUrl
+
         const updatedEventsItem = await Events.findByIdAndUpdate(
             id,
-            { title, body, dateTime},
+            { title, body, dateTime, imageurl},
             { new: true } // Return the updated document
         );
         

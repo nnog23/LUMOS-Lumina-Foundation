@@ -49,7 +49,16 @@ async function main() {
   });
 
   app.set("view engine", "ejs");
-  app.use(express.json());
+
+  // WARNING: UNCOMMENT THIS OUT IF EVER 
+  // WARNING: UNCOMMENT THIS OUT IF EVER 
+  // WARNING: UNCOMMENT THIS OUT IF EVER 
+  // WARNING: UNCOMMENT THIS OUT IF EVER 
+  // WARNING: UNCOMMENT THIS OUT IF EVER 
+  // WARNING: UNCOMMENT THIS OUT IF EVER 
+  // WARNING: UNCOMMENT THIS OUT IF EVER 
+  
+  // app.use(express.json());
 
   app.use(router);
 
