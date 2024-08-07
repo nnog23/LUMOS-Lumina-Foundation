@@ -48,7 +48,7 @@
                     <textarea
                       rows="17"
                       name="body"
-                      class="w-full text-black focus:outline-none text-wrap resize-none"><%=initialData.body.trim()%></textarea
+                      class="w-full text-black focus:outline-none text-wrap resize-none"><%=initialData.body%></textarea
                     >
                   </div>
                   <input
@@ -58,19 +58,28 @@
                     accept=".png, .jpg, .jpeg"
                   />
 
-                  <div class="bg-white sm:mx-20 p-2 m-5 rounded h-125 sm:h-100">
-                    <p class="text-black">
-                      Date: <%= initialData.dateTime.toLocaleString('default',
-                      {month: 'long'}); %> <%= initialData.dateTime.getDate()
-                      %>, <%= initialData.dateTime.getFullYear(); %>
-                    </p>
-                    <input
-                      type="datetime-local"
-                      name="date"
-                      class="text-black sm:full"
-                      value="<%= initialData.dateTime %>"
-                    />
-                  </div>
+                  <% if (initialData.dateTime) { %>
+                    <div class="bg-white sm:mx-20 p-2 m-5 rounded h-125 sm:h-100">
+                      <p class="text-black">
+                        Date: <%= new Date(initialData.dateTime).toLocaleString('default', {month: 'long'}) %> <%= new Date(initialData.dateTime).getDate() %>, <%= new Date(initialData.dateTime).getFullYear() %>
+                      </p>
+                      <input
+                        type="datetime-local"
+                        name="date"
+                        class="text-black sm:full"
+                        required
+                      />
+                    </div>
+                    <% } else { %>
+                    <div class="bg-white sm:mx-20 p-2 m-5 rounded h-125 sm:h-100">
+                      <input
+                        type="datetime-local"
+                        name="date"
+                        class="text-black sm:full"
+                        required
+                      />
+                    </div>
+                    <% } %>
 
                   <div
                     style="cursor: pointer"

@@ -124,8 +124,8 @@ const {type, form} = Astro.props;
                     });
 
                     if (response.ok) {
-                        // Redirect to /admin/news or reload the page to reflect the changes
-                        window.location.href = '/admin/news'; // Or use location.reload() to refresh the page
+                        const url = '/admin/' + type
+                        window.location.href = url; // Or use location.reload() to refresh the page
                     } else {
                         console.log("Error:", response.status);
                         // Optionally handle errors or show a message to the user

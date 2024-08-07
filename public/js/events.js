@@ -2,11 +2,11 @@
 const submitBtn = document.querySelector("#createEvents");
 const confirmeditBtn = document.querySelector('#confirmeditEvents');
 const createeventsForm = document.forms.createEventsForm;
-const editeventsForm = document.forms.createEventsForm;
+const editeventsForm = document.forms.editEventsForm;
 
 submitBtn?.addEventListener("click", async (e) => {
     e.preventDefault();
-    const formData = new FormData(eventsForm);
+    const formData = new FormData(createeventsForm);
     console.log('submit');
     const myObj = { 
         title: formData.get("title"),

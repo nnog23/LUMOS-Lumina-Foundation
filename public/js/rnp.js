@@ -6,7 +6,7 @@ const editrnpForm = document.forms.editRnpForm;
 
 submitBtn?.addEventListener("click", async (e) => {
     e.preventDefault();
-    const formData = new FormData(editrnpForm);
+    const formData = new FormData(creaternpForm);
     console.log('submit');
     const myObj = { 
         title: formData.get("title"),
