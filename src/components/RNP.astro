@@ -1,7 +1,3 @@
----
-const {type, form} = Astro.props;
----
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,30 +35,18 @@ const {type, form} = Astro.props;
         }
     </style>
 </head>
-<body>
-    <!-- -->
-
-    <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-        <div class="flex flex-col justify-center items-center">
-            
-            <div class="relative w-full max-w-6xl rounded-lg bg-white">
-                
-                <div class="px-16 py-8 w-full max-w-6xl bg-white">
-                    <h1 class="flex text-xl font-semibold justify-center">International Journal of Research Studies in Education</h1>
-                    <br>
-                    Consortia Academia is a non-profit organization founded in 2005 by scholars from the Asia-Pacific and the United States. Consortia Academia seeks to provide an avenue for novice and expert scholars and researchers to publish and share their work to the academe through an open-access environment. Starting 2019, in line with expanding its mission and vision, Consortia Academia partnered with Network of Professional Researchers and Educators (NPRE), a non-stock, non-profit organization committed to the professional growth of professional researchers and educators in the ASEAN region.
-                </div>
-                
-            </div>
-    
-            <br>
-            <h1 class="flex text-xl font-semibold justify-center">Current Publications</h1>
-        
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="flex flex-col justify-center items-center">
+        <div class="relative w-full max-w-6xl rounded-lg bg-white">
+            <div class="px-16 py-8 w-full max-w-6xl bg-white">
+                <h1 class="flex text-xl font-semibold justify-center">International Journal of Research Studies in Education</h1>
+                <br>
+                Consortia Academia is a non-profit organization founded in 2005 by scholars from the Asia-Pacific and the United States. Consortia Academia seeks to provide an avenue for novice and expert scholars and researchers to publish and share their work to the academe through an open-access environment. Starting 2019, in line with expanding its mission and vision, Consortia Academia partnered with Network of Professional Researchers and Educators (NPRE), a non-stock, non-profit organization committed to the professional growth of professional researchers and educators in the ASEAN region.
             </div>
         </div>
-    </body>
-
-    <!-- -->
+        <br>
+        <h1 class="flex text-xl font-semibold justify-center">Current Publications</h1>
+    </div>
 
     <div class="flex flex-col" data-type="rnp">
         <div id="container" class="flex flex-col items-end">
@@ -82,14 +66,10 @@ const {type, form} = Astro.props;
         </div>
     </div>
 
-    <!-- -->
-
     <body class="bg-gray-100 flex items-center justify-center min-h-screen">
         <br>
         <div class="flex flex-col justify-center items-center">
-            
             <div class="relative w-full max-w-6xl rounded-lg bg-white">
-                
                 <div class="px-16 py-8 w-full max-w-6xl bg-white">
                     <h1 class="flex text-xl font-semibold justify-center">Asia Pacific Journal of Multidisciplinary Research : Publication Partner of Lumina Foundation</h1>
                     <br>
@@ -97,13 +77,18 @@ const {type, form} = Astro.props;
                     <br>
                     The Asia Pacific Journal of Multidisciplinary Research (APJMR) is the official research journal of the Graduate School with Lyceum of the Philippines University-Batangas as its publisher which aims to provide a medium open to the global community of scholars who aspire to have their researches published in a peer-reviewed journal.
                     <br>
+                    <br>
+                    <div class="flex justify-center">
+                        <img src="../../images/rp1.png" class="rounded-lg">
+                    </div>
+                    <br>
+                    <p class="text-xs">
+                        From left to right: Dr. Cecile Pring (Vice President for Academics and Research of LPU-Batangas), Dr. Fides A. del Castillo (President of NPRE, Inc.), Mr. Clarence Darro del Castillo, MBA (President of Lumina Foundation, Inc.), Ms. Cristina Macascas, MAT (Vice President of NPRE, Inc.), Dr. Vivian Titular (National Coordinator of NPRE, Inc.) and Dr. Jake Laguador (Director of Journal Publication, Innovation and Data Manager of LPU- Batangas). 
+                    </p>
                 </div>
             </div>
-
             <br>
-
             <div class="relative w-full max-w-6xl rounded-lg bg-white">
-                
                 <div class="px-16 py-8 w-full max-w-6xl bg-white">
                     <h1 class="flex text-xl font-semibold justify-center">SCOPE</h1>
                     <h1 class="flex text-xl font-semibold justify-center">The journal publishes quarterly issues in various disciplines limited to:</h1>
@@ -115,16 +100,12 @@ const {type, form} = Astro.props;
                             <li>Science, Technology, Engineering, and Mathematics</li>
                         </ul>
                     <br>
-
                     The journal primarily has, as its audience, scientists, academicians, practitioners of various fields, policymakers, health advocates, graduate students, and other individuals interested in pushing the frontiers of developing innovative ideas for social and global transformation.
                     </div>
-                
                 </div>
             </div>
         </div>
     </body>
-
-    <!-- -->
 
     <script>
         let collection = [];
@@ -137,6 +118,7 @@ const {type, form} = Astro.props;
                 const response = await fetch(url);
                 if (response.ok) {
                     collection = await response.json();
+                    sortCollectionByDate();
                     updateCards();
                 } else {
                     console.error('Failed to fetch data:', response.statusText);
@@ -146,59 +128,42 @@ const {type, form} = Astro.props;
             }
         }
 
-        function formatBody(body) {
-            return body.replace(/\n/g, '<br>');
-        }
-
         function formatDate(dateTime) {
             const date = new Date(dateTime);
-            return date.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
+            return date.getFullYear();
+        }
+
+        function sortCollectionByDate() {
+            collection.sort((a, b) => new Date(b.dateTime) - new Date(a.dateTime));
         }
 
         function updateCards() {
             const cardsContainer = document.getElementById('cardsContainer');
             cardsContainer.innerHTML = '';
 
-            collection.forEach(item => {
-                console.log('Item:', item); // Log item data to verify
-                const card = document.createElement('div');
-                card.classList.add('bg-white', 'p-4', 'rounded', 'shadow-lg', 'relative', 'w-64', 'h-full', 'cursor-pointer');
-                card.dataset.title = item.title;
-                card.dataset.body = item.body;
-                card.dataset.date = item.dateTime;
+            collection
+                .filter(item => item.published === 1) // Only include items where published is 1
+                .forEach(item => {
+                    console.log('Item:', item); // Log item data to verify
+                    const card = document.createElement('a');
+                    card.classList.add('bg-white', 'p-4', 'rounded', 'shadow-lg', 'relative', 'w-80', 'h-full', 'cursor-pointer', 'block');
+                    card.target = "_blank";
+                    card.href = item.body;
 
-                const title = document.createElement('h3');
-                title.classList.add('text-xl', 'font-semibold');
-                title.textContent = item.title;
+                    const title = document.createElement('h3');
+                    title.classList.add('text-xl', 'font-semibold');
+                    title.textContent = item.title;
 
-                const date = document.createElement('p');
-                date.classList.add('text-gray-500', 'text-sm');
-                date.textContent = formatDate(item.dateTime) || 'No date available'; // Fallback text
+                    const date = document.createElement('p');
+                    date.classList.add('text-gray-500', 'text-sm');
+                    date.textContent = formatDate(item.dateTime) || 'No date available'; // Fallback text
 
-                card.appendChild(title);
-                card.appendChild(date);
-                card.addEventListener('click', () => showModal(item));
+                    card.appendChild(title);
+                    card.appendChild(date);
 
-                cardsContainer.appendChild(card);
-            });
+                    cardsContainer.appendChild(card);
+                });
         }
-
-        function showModal(item) {
-            document.getElementById('modalTitle').textContent = item.title;
-            document.getElementById('modalBody').innerHTML = formatBody(item.body);
-            document.getElementById('modalDate').textContent = formatDate(item.dateTime) || 'No date available'; // Fallback text
-            document.getElementById('modal').style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
-        }
-
-        document.getElementById('closeModal').addEventListener('click', closeModal);
 
         document.addEventListener('DOMContentLoaded', () => {
             fetchData();
