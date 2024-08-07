@@ -1,11 +1,7 @@
 import { Router } from 'express';
 import Rnp from '../models/Rnp.js';
-
+import { isAuthenticated } from './indexRouter.js';
 const rnpRouter = Router();
-
-rnpRouter.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
 
 rnpRouter.get("/rnp", async (req, res) => {
     try {
@@ -19,7 +15,7 @@ rnpRouter.get("/rnp", async (req, res) => {
 });
 
 
-rnpRouter.post("/rnp", async (req, res) => {
+rnpRouter.post("/rnp", isAuthenticated, async (req, res) => {
     console.log("POST request received for /rnp");
     try {
         const result = await Rnp.create({
@@ -38,7 +34,7 @@ rnpRouter.post("/rnp", async (req, res) => {
     }
 });
 
-rnpRouter.get('/admin/forms/edit/editRnp/:id', async (req, res) => {
+rnpRouter.get('/admin/forms/edit/editRnp/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     try {
         const rnpItem = await Rnp.findById(id);
@@ -55,7 +51,7 @@ rnpRouter.get('/admin/forms/edit/editRnp/:id', async (req, res) => {
     }
 });
 
-rnpRouter.put('/rnp/:id', async (req, res) => {
+rnpRouter.put('/rnp/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     const { title, body, date } = req.body;
     const dateTime = date;
@@ -77,7 +73,7 @@ rnpRouter.put('/rnp/:id', async (req, res) => {
     }
 });
 
-rnpRouter.delete('/deleternp/:id', async (req, res) => {
+rnpRouter.delete('/deleternp/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     try {
         const result = await Rnp.findByIdAndDelete(id);
@@ -93,7 +89,7 @@ rnpRouter.delete('/deleternp/:id', async (req, res) => {
     }
 });
 
-rnpRouter.put('/publishrnp/:id', async (req, res) => {
+rnpRouter.put('/publishrnp/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     const published = 1;
     try {
@@ -114,7 +110,7 @@ rnpRouter.put('/publishrnp/:id', async (req, res) => {
     }
 });
 
-rnpRouter.put('/unpublishrnp/:id', async (req, res) => {
+rnpRouter.put('/unpublishrnp/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     const published = 0;
     try {

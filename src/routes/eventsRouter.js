@@ -1,13 +1,9 @@
 import { Router } from 'express';
 import Events from '../models/Events.js';
-
+import { isAuthenticated } from './indexRouter.js';
 const eventsRouter = Router();
 
-eventsRouter.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
-
-eventsRouter.get("/events", async (req, res) => {
+eventsRouter.get("/events",  async (req, res) => {
     try {
         const collection = await Events.find({}).lean().exec();
         res.json(collection);
@@ -19,7 +15,7 @@ eventsRouter.get("/events", async (req, res) => {
 });
 
 
-eventsRouter.post("/events", async (req, res) => {
+eventsRouter.post("/events", isAuthenticated, async (req, res) => {
     console.log("POST request received for /events");
     try {
         const result = await Events.create({
@@ -39,7 +35,7 @@ eventsRouter.post("/events", async (req, res) => {
 });
 
 
-eventsRouter.get('/admin/forms/edit/editEvents/:id', async (req, res) => {
+eventsRouter.get('/admin/forms/edit/editEvents/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     try {
         const eventsItem = await Events.findById(id);
@@ -56,7 +52,7 @@ eventsRouter.get('/admin/forms/edit/editEvents/:id', async (req, res) => {
     }
 });
 
-eventsRouter.put('/events/:id', async (req, res) => {
+eventsRouter.put('/events/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     const { title, body, date } = req.body;
     const dateTime = date;
@@ -78,7 +74,7 @@ eventsRouter.put('/events/:id', async (req, res) => {
     }
 });
 
-eventsRouter.delete('/deleteevents/:id', async (req, res) => {
+eventsRouter.delete('/deleteevents/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     try {
         const result = await Events.findByIdAndDelete(id);
@@ -94,7 +90,7 @@ eventsRouter.delete('/deleteevents/:id', async (req, res) => {
     }
 });
 
-eventsRouter.put('/publishevents/:id', async (req, res) => {
+eventsRouter.put('/publishevents/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     const published = 1;
     try {
@@ -115,7 +111,7 @@ eventsRouter.put('/publishevents/:id', async (req, res) => {
     }
 });
 
-eventsRouter.put('/unpublishevents/:id', async (req, res) => {
+eventsRouter.put('/unpublishevents/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     const published = 0;
     try {

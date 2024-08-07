@@ -1,11 +1,7 @@
 import { Router } from 'express';
 import News from '../models/News.js';
-
+import { isAuthenticated } from './indexRouter.js';
 const newsRouter = Router();
-
-newsRouter.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
 
 newsRouter.get("/news", async (req, res) => {
     try {
@@ -19,7 +15,7 @@ newsRouter.get("/news", async (req, res) => {
 });
 
 
-newsRouter.post("/news", async (req, res) => {
+newsRouter.post("/news", isAuthenticated, async (req, res) => {
     console.log("POST request received for /news");
     try {
         const result = await News.create({
@@ -39,7 +35,7 @@ newsRouter.post("/news", async (req, res) => {
 });
 
 
-newsRouter.get('/admin/forms/edit/editNews/:id', async (req, res) => {
+newsRouter.get('/admin/forms/edit/editNews/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     try {
         const newsItem = await News.findById(id);
@@ -56,7 +52,7 @@ newsRouter.get('/admin/forms/edit/editNews/:id', async (req, res) => {
     }
 });
 
-newsRouter.put('/news/:id', async (req, res) => {
+newsRouter.put('/news/:id', isAuthenticated, async (req, res) => {
     
     const { id } = req.params;
     const { title, body, date } = req.body;
@@ -80,7 +76,7 @@ newsRouter.put('/news/:id', async (req, res) => {
     }
 });
 
-newsRouter.delete('/deletenews/:id', async (req, res) => {
+newsRouter.delete('/deletenews/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     try {
         const result = await News.findByIdAndDelete(id);
@@ -96,7 +92,7 @@ newsRouter.delete('/deletenews/:id', async (req, res) => {
     }
 });
 
-newsRouter.put('/publishnews/:id', async (req, res) => {
+newsRouter.put('/publishnews/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     const published = 1;
     try {
@@ -117,7 +113,7 @@ newsRouter.put('/publishnews/:id', async (req, res) => {
     }
 });
 
-newsRouter.put('/unpublishnews/:id', async (req, res) => {
+newsRouter.put('/unpublishnews/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     const published = 0;
     try {
