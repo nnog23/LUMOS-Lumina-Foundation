@@ -1,11 +1,9 @@
 import { Router } from 'express';
 import News from '../models/News.js';
+import { isAuthenticated } from './indexRouter.js';
+import upload from '../../upload.js'
 
 const newsRouter = Router();
-
-newsRouter.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
 
 newsRouter.get("/news", async (req, res) => {
     try {
@@ -18,17 +16,31 @@ newsRouter.get("/news", async (req, res) => {
     }
 });
 
+newsRouter.post("/news", isAuthenticated, upload.single('image'), async (req, res) => {
 
-newsRouter.post("/news", async (req, res) => {
     console.log("POST request received for /news");
+
+    const file = req.file;
+
+    if(!file){
+
+        console.log("NO FILE")
+        return res.status(400).send('No file uploaded.');
+
+    }
+
     try {
+    
+        const imageUrl = file.path;
+
         const result = await News.create({
             title: req.body.title, 
             body: req.body.body,
             dateTime: req.body.date,
-            published: 0
+            published: 0,
+            imageurl: imageUrl
         });
-
+        
         console.log(result);
         res.redirect('/admin/news');
         
@@ -38,15 +50,14 @@ newsRouter.post("/news", async (req, res) => {
     }
 });
 
-
-newsRouter.get('/admin/forms/edit/editNews/:id', async (req, res) => {
+newsRouter.get('/admin/forms/edit/editNews/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     try {
         const newsItem = await News.findById(id);
         if (newsItem) {
+            console.log(newsItem)
             newsItem.body = newsItem.body.trim();
             res.render('editNews', {initialData : newsItem})
-
         } else {
             res.status(404).send('News item not found');
         }
@@ -56,16 +67,27 @@ newsRouter.get('/admin/forms/edit/editNews/:id', async (req, res) => {
     }
 });
 
-newsRouter.put('/news/:id', async (req, res) => {
+newsRouter.put('/news/:id', isAuthenticated,  upload.single('image'), async (req, res) => {
     
     const { id } = req.params;
     const { title, body, date } = req.body;
     const dateTime = date;
+    const file = req.file;
 
     try {
+
+        let imageUrl = null;
+
+        if (file) {
+            
+            imageUrl = file.path; // This is Cloudinary's URL for the uploaded image
+        }
+        
+        const imageurl = imageUrl
+
         const updatedNewsItem = await News.findByIdAndUpdate(
             id,
-            { title, body, dateTime},
+            { title, body, dateTime, imageurl},
             { new: true } // Return the updated document
         );
         
@@ -80,7 +102,7 @@ newsRouter.put('/news/:id', async (req, res) => {
     }
 });
 
-newsRouter.delete('/deletenews/:id', async (req, res) => {
+newsRouter.delete('/deletenews/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     try {
         const result = await News.findByIdAndDelete(id);
@@ -96,7 +118,7 @@ newsRouter.delete('/deletenews/:id', async (req, res) => {
     }
 });
 
-newsRouter.put('/publishnews/:id', async (req, res) => {
+newsRouter.put('/publishnews/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     const published = 1;
     try {
@@ -117,7 +139,7 @@ newsRouter.put('/publishnews/:id', async (req, res) => {
     }
 });
 
-newsRouter.put('/unpublishnews/:id', async (req, res) => {
+newsRouter.put('/unpublishnews/:id', isAuthenticated, async (req, res) => {
     const { id } = req.params;
     const published = 0;
     try {

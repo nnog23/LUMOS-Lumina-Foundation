@@ -7,24 +7,32 @@ const editrnpForm = document.forms.editRnpForm;
 submitBtn?.addEventListener("click", async (e) => {
     e.preventDefault();
     const formData = new FormData(creaternpForm);
+    
+    /*
     console.log('submit');
     const myObj = { 
         title: formData.get("title"),
         body: formData.get("body"),
         date: formData.get("date"),
         published: 0
+
     };
     console.log(myObj);
     const jString = JSON.stringify(myObj);
     console.log(jString);
+    */
 
     try {
         const response = await fetch("/rnp", {
             method: 'POST',
-            body: jString,
+         // body: jString,
+            body: formData,
+         /*
             headers: {
                 'Content-Type': 'application/json'
             }
+         */
+        
         });
         
         console.log(response);
@@ -47,15 +55,6 @@ confirmeditBtn?.addEventListener("click", async (e) => {
     e.preventDefault();
     const formData = new FormData(editrnpForm);
     console.log('submit');
-    const myObj = { 
-        title: formData.get("title"),
-        body: formData.get("body"),
-        date: formData.get("date"),
-        published: 0
-    };
-    console.log(myObj);
-    const jString = JSON.stringify(myObj);
-    console.log(jString);
 
     const url = window.location.pathname;
     const parts = url.split('/');
@@ -64,10 +63,7 @@ confirmeditBtn?.addEventListener("click", async (e) => {
     try {
         const response = await fetch("/rnp/" + rnpid, {
             method: 'PUT',
-            body: jString,
-            headers: {
-                'Content-Type': 'application/json'
-            }
+            body: formData,
         });
         
         console.log(response);

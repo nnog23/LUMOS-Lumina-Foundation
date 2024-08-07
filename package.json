@@ -13,12 +13,24 @@
     "@astrojs/tailwind": "^5.1.0",
     "@fontsource/inter": "^5.0.20",
     "astro": "^4.11.6",
+    "bson": "^6.8.0",
+    "cloudinary": "^2.4.0",
+    "connect-mongodb-session": "^5.0.0",
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "mongodb": "^6.8.0",
-    "mongoose": "^6.0.0",
+    "mongoose": "^8.5.2",
+    "multer": "^1.4.5-lts.1",
+    "multer-storage-cloudinary": "^4.0.0",
     "normalize.css": "^8.0.1",
     "tailwindcss": "^3.4.6"
+  },
+  "resolutions": {
+    "bson": "^6.8.0"
+  },
+  "devDependencies": {
+    "@types/multer": "^1.4.11"
   }
 }

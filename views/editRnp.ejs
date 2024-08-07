@@ -51,6 +51,15 @@
                       class="w-full text-black focus:outline-none text-wrap resize-none"><%=initialData.body%></textarea
                     >
                   </div>
+
+                  <% if (initialData.imageurl) { %>
+                    Current Image:
+                    <div class = "flex items-center justify-center p-2 m-5">
+                    
+                      <img src="<%= initialData.imageurl %>" class = "flex items-center justify-center" alt="Current Image" style="max-width: 400px; max-height: 400px;" />
+                    </div>
+                  <% } %>
+    
                   <input
                     type="file"
                     id="myfile"
