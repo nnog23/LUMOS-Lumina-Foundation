@@ -59,9 +59,9 @@ async function main() {
   // WARNING: UNCOMMENT THIS OUT IF EVER 
   
   // app.use(express.json());
-
+  
   app.use(router);
-
+  
   try {
     // Connect to MongoDB
     await connectToMongo();

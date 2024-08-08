@@ -1,8 +1,11 @@
 import { Router } from 'express';
 import Admins from '../models/Admins.js';
 import News from '../models/News.js';
+import express from "express";
 
-const adminsRouter = Router();
+const adminsRouter = express.Router();
+
+adminsRouter.use(express.json());
 
 adminsRouter.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
@@ -24,12 +27,16 @@ adminsRouter.get("/admin/news", async (req, res) => {
 adminsRouter.post("/login", async (req, res) =>{
 
     const { username, password } = req.body;
+
     console.log("POST request received for /login");
+
+    console.log(username);
+    console.log(password);
 
     try {
         
         const admin = await Admins.findOne({ username });
-
+        
         if (!admin){
 
             res.status(401).json({ message: 'Username does not exist.' });

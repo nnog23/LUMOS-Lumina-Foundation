@@ -32,7 +32,7 @@ newsRouter.post("/news", isAuthenticated, upload.single('image'), async (req, re
     try {
     
         const imageUrl = file.path;
-
+        
         const result = await News.create({
             title: req.body.title, 
             body: req.body.body,
