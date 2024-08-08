@@ -6,14 +6,17 @@ const loginForm = document.forms.loginForm;
 loginBtn?.addEventListener("click", async (e) => {
     e.preventDefault();
     const formData = new FormData(loginForm);
+
+
     console.log('login');
     const myObj = { 
-        username: formData.get("email"),
+        username: formData.get("username"),
         password: formData.get("password"),
     };
     console.log(myObj);
     const jString = JSON.stringify(myObj);
     console.log(jString);
+    
 
     try {
 
@@ -26,7 +29,7 @@ loginBtn?.addEventListener("click", async (e) => {
         });
         
         console.log(response);
-        
+            
         const result = await response.json();
         
         if (response.status === 200) {
