@@ -82,21 +82,36 @@ rnpRouter.put('/rnp/:id', isAuthenticated,  upload.single('image'), async (req, 
         if (file) {
             
             imageUrl = file.path; // This is Cloudinary's URL for the uploaded image
-        }
+            const imageurl = imageUrl
+            const updatedRnpItem = await Rnp.findByIdAndUpdate(
+                id,
+                { title, body, dateTime, imageurl},
+                { new: true } // Return the updated document
+            );
+            
+            if (updatedRnpItem) {
+                res.redirect('/')
+            } else {
+                res.status(404).send('Rnp item not found');
+            }
 
-        const imageurl = imageUrl
-
-        const updatedRnpItem = await Rnp.findByIdAndUpdate(
-            id,
-            { title, body, dateTime, imageurl},
-            { new: true } // Return the updated document
-        );
-        
-        if (updatedRnpItem) {
-            res.redirect('/')
         } else {
-            res.status(404).send('Rnp item not found');
+
+            const updatedRnpItem = await Rnp.findByIdAndUpdate(
+                id,
+                { title, body, dateTime},
+                { new: true } // Return the updated document
+            );
+
+            if (updatedRnpItem) {
+                res.redirect('/')
+            } else {
+                res.status(404).send('Rnp item not found');
+            }
+            
         }
+    
+
     } catch (err) {
         console.error(err);
         res.status(500).send('Server error');

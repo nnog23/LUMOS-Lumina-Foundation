@@ -79,6 +79,7 @@
                         type="datetime-local"
                         name="date"
                         class="text-black sm:full"
+                        value="<%= new Date(new Date(initialData.dateTime).getTime() + (8 * 60 * 60 * 1000)).toISOString().slice(0, 16) %>"
                         required
                       />
                     </div>

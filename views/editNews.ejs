@@ -65,8 +65,9 @@
                     id="myfile"
                     name="image"
                     accept=".png, .jpg, .jpeg"
+                    value="<%= initialData.imageurl %>"
                   />
-
+                    
                   
                   <% if (initialData.dateTime) { %>
                     <div class="bg-white sm:mx-20 p-2 m-5 rounded h-125 sm:h-100">
@@ -77,6 +78,7 @@
                         type="datetime-local"
                         name="date"
                         class="text-black sm:full"
+                        value="<%= new Date(new Date(initialData.dateTime).getTime() + (8 * 60 * 60 * 1000)).toISOString().slice(0, 16) %>"
                         required
                       />
                     </div>

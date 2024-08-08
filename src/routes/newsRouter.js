@@ -81,21 +81,36 @@ newsRouter.put('/news/:id', isAuthenticated,  upload.single('image'), async (req
         if (file) {
             
             imageUrl = file.path; // This is Cloudinary's URL for the uploaded image
-        }
-        
-        const imageurl = imageUrl
+            const imageurl = imageUrl
+            const updatedNewsItem = await News.findByIdAndUpdate(
+                id,
+                { title, body, dateTime, imageurl},
+                { new: true } // Return the updated document
+            );
+            
+            if (updatedNewsItem) {
+                res.redirect('/')
+            } else {
+                res.status(404).send('News item not found');
+            }
 
-        const updatedNewsItem = await News.findByIdAndUpdate(
-            id,
-            { title, body, dateTime, imageurl},
-            { new: true } // Return the updated document
-        );
-        
-        if (updatedNewsItem) {
-            res.redirect('/')
         } else {
-            res.status(404).send('News item not found');
+
+            const updatedNewsItem = await News.findByIdAndUpdate(
+                id,
+                { title, body, dateTime},
+                { new: true } // Return the updated document
+            );
+
+            if (updatedNewsItem) {
+                res.redirect('/')
+            } else {
+                res.status(404).send('News item not found');
+            }
+
         }
+    
+
     } catch (err) {
         console.error(err);
         res.status(500).send('Server error');
